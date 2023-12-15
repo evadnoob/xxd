@@ -4,6 +4,7 @@ package xxd
 
 import (
 	"fmt"
+	"io"
 	"log"
 	"strings"
 )
@@ -46,9 +47,9 @@ func Dump(address int, data []byte) (lines []string) {
 }
 
 // Print dumps the xxd.Dump() output directly to stdout.
-func Print(offset int, data []byte) {
+func Print(writer io.Writer, offset int, data []byte) {
 	for _, line := range Dump(offset, data) {
-		fmt.Println(line)
+		_, _ = writer.Write([]byte(line + "\n"))
 	}
 }
 
